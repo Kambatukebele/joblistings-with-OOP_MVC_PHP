@@ -1,8 +1,8 @@
 <?php
 
-  trait Database 
+  class Database 
   {
-    private function db_connect()
+    protected function db_connect()
     {
       $query = DB_CLIENT.":host=". DB_HOST .";dbname=" . DB_NAME;
 
