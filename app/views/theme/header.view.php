@@ -54,9 +54,9 @@
 	                  <li><a href="single.html">single</a></li>
 	                </ul>
 	              </li> -->
-	              <!-- <li><a class="ticker-btn" href="#">Signup</a></li>
-	              <li><a class="ticker-btn" href="#">Login</a></li> -->
-	              <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>register_company">Register your company</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>login_company">Login</a></li>
+	              <!-- <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li> -->
 	            </ul>
 	          </nav><!-- #nav-menu-container -->
 	        </div>

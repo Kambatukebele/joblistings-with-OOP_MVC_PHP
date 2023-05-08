@@ -2,7 +2,7 @@
 
   class Database 
   {
-    protected function db_connect()
+    public function db_connect()
     {
       $query = DB_CLIENT.":host=". DB_HOST .";dbname=" . DB_NAME;
 
@@ -49,3 +49,5 @@
 
     }
   }
+
+ 

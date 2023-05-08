@@ -16,10 +16,11 @@
 
     protected function model($model)
     {
-      $filename = "../app/models/". $model. ".model.php";
+      $filename = "../app/models/". $model . ".php";
       if(file_exists($filename)){
+
         require $filename;
-        $this->$model = new $this->$model(); 
+        return $model = new $model(); 
    
       }
     }

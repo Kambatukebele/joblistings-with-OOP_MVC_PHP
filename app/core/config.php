@@ -2,7 +2,7 @@
 
   //MYSQL CONSTANTS
   define("DB_HOST", $_SERVER['SERVER_NAME']);
-  define("DB_NAME", "joblisting");
+  define("DB_NAME", "joblistings");
   define("DB_USER", "root");
   define("DB_PASS", "");
   define("DB_CLIENT", "mysql");
