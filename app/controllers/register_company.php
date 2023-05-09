@@ -10,19 +10,15 @@
       if($_SERVER['REQUEST_METHOD'] === "POST")
       {
         $companyModel = $this->model('company');
-        $companyModel->store($_POST); 
+        $result = $companyModel->store($_POST, $_FILES); 
 
-        if(!$companyModel)
+        if(is_array($result) && count($result) > 0)
         {
-          $data['errors'] = "We could not register your company"; 
-          return $data; 
+          $data['error'] = $result;         
         }else{
-          $data['success'] = "Your company has been successfully registered"; 
-          header("Location: " . ROOT . "login");
-          return $data;
+           Redirect("login"); 
         }
       }
-
 
       //You need to specify the folder of the view you want to load
       return $this->view("theme","register_company", $data);  
