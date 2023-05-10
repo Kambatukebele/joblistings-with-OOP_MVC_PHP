@@ -95,6 +95,7 @@
 <script src="<?=ROOT_ASSETS?>theme/js/parallax.min.js"></script>
 <script src="<?=ROOT_ASSETS?>theme/js/mail-script.js"></script>
 <script src="<?=ROOT_ASSETS?>theme/js/main.js"></script>
+<script src="<?=ROOT_ASSETS?>theme/js/extrajs.js"></script>
 </body>
 
 </html>

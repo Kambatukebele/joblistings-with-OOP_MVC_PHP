@@ -53,25 +53,21 @@
               </div>
               <?php endif; ?>
             </div>
-
           </div>
           <br>
           <div class="custom-file my-5">
             <img style="width:60px" src="<?=ROOT_ASSETS?>images/<?=$data['show'][0]->logo?>">
           </div>
-          <div>
+          <div class="my-2">
             Do you want to change you logo as well?
             <div class="custom-file">
-              <input type="checkbox" value="Yes" id="chechbox-yes">
-              <label for="customFile">Yes</label>
-              <input type="checkbox" value="no" id="checkbox-no" checked>
-              <label for="customFile">No</label>
+              <button class="btn btn-primary edit-logo" type="button" id="button-yes">Edit Logo</button>
+              <button class="btn btn-danger d-none" type="button" id="button-no">Hide Logo</button>
             </div>
 
           </div>
           <div class="custom-file d-none" id="hide-show">
             <label class="custom-file-label" for="customFile">Edit your photo, if needed</label>
-            <input type="file" name="logo" class="custom-file-input" value="<?= (''); ?>">
           </div>
           <?php if (isset($data['error']['logo'])) : ?>
           <div class="alert alert-danger mt-2">
@@ -79,28 +75,6 @@
           </div>
           <?php endif; ?>
           <br><br>
-          <script>
-          let checkboxYes = document.getElementById('chechbox-yes');
-          let checkboxNo = document.getElementById('checkbox-no');
-          let hideDisplay = document.getElementById('hide-show');
-          if (checkboxNo.checked == true) {
-            checkboxYes.addEventListener('click', () => {
-              checkboxNo.removeAttribute("checked");
-              checkboxYes.setAttribute("checked", true);
-
-              hideDisplay.classList.remove('d-none');
-            });
-
-            // checkboxNo.addEventListener('click', () => {
-            //   checkboxNo.checked = true;
-            //   checkboxYes.checked == false;
-            //   hideDisplay.classList.add('d-none');
-            // });
-          }
-          elseif(checkboxNo.checked == false) {
-            alert('Yes');
-          }
-          </script>
           <div class="row">
             <div class="col">
               <label for="formGroupExampleInput">Company's Website URL<br> <small>Example:
@@ -124,24 +98,31 @@
               </div>
               <?php endif; ?>
             </div>
-
+            <?php showPrint($data);?>
           </div>
           <br><br>
-          <div class="row">
-            <div class="col">
+          <div class="my-2">
+            Do you want to change your password as well?
+            <div class="custom-file">
+              <button class="btn btn-primary edit-password" type="button" id="passwordBlockBtn-yes">Edit
+                Password</button>
+              <button class="btn btn-danger d-none" type="button" id="passwordBlockBtn-no">Hide Password</button>
+            </div>
+          </div>
+          <div class="row d-none" id="HideShowPasswordBlock">
+            <div class="col" id="input_password">
               <label for="formGroupExampleInput">Password<br> <small>Enter your password. At least 6
                   digits</small></label>
-              <input type="password" name="password" class="form-control" require
-                value="<?=$data['show'][0]->password;?>">
+              <!-- <input type="password" name="password" class="form-control"> -->
               <?php if (isset($data['error']['password'])) : ?>
               <div class="alert alert-danger mt-2">
                 <?= $data['error']['password']; ?>
               </div>
               <?php endif; ?>
             </div>
-            <div class="col">
+            <div class="col" id="input_password_confirm">
               <label for="formGroupExampleInput">Confirm Password<br><small>Just to double check</small></label>
-              <input type="password" name="password_confirm" class="form-control" require>
+              <!-- <input type="password" name="password_confirm" class="form-control" require> -->
               <?php if (isset($data['error']['passwordConfirm'])) : ?>
               <div class="alert alert-danger mt-2">
                 <?= $data['error']['passwordConfirm']; ?>

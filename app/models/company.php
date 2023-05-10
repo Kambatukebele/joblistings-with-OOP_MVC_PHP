@@ -12,7 +12,7 @@ class Company extends Database
     $logoName = htmlspecialchars(trim($FILEPIC['logo']['name']));
     $logoSize = htmlspecialchars(trim($FILEPIC['logo']['size']));
     $logoTMP = htmlspecialchars(trim($FILEPIC['logo']['tmp_name']));
-    $logoType = htmlspecialchars(trim($FILEPIC['logo']['type'])); 
+    $logoType = htmlspecialchars(trim($FILEPIC['logo']['type']));
     // END IMAGE DATA
     $companyWebsiteUrl = htmlspecialchars(trim($POST['company_website_url']));
     $password = htmlspecialchars(trim($POST['password']));
@@ -125,13 +125,13 @@ class Company extends Database
   //LOGGING A COMPANY
   public function login_company($POST)
   {
-     $database = new Database();
+    $database = new Database();
 
     //validation
     $password = htmlspecialchars(trim($POST['password']));
     $companyEmail = htmlspecialchars(trim($POST['company_email']));
-    
-    $error = []; 
+
+    $error = [];
 
     //Email
     if (empty($companyEmail)) {
@@ -145,36 +145,36 @@ class Company extends Database
       $error['password'] = 'You must enter your password';
     }
 
-    if(empty($error)) {
-      $data = []; 
-      $data['company_email'] = $companyEmail; 
+    if (empty($error)) {
+      $data = [];
+      $data['company_email'] = $companyEmail;
 
       $query = "SELECT * FROM company WHERE company_email = :company_email LIMIT 1";
-      $stmt = $database->read($query, $data); 
+      $stmt = $database->read($query, $data);
 
-      if($stmt) {
-        $passwordCheck = password_verify($password, $stmt[0]->password); 
-        if($passwordCheck){
+      if ($stmt) {
+        $passwordCheck = password_verify($password, $stmt[0]->password);
+        if ($passwordCheck) {
           //Connection success
-          return $stmt;  
-        }else{
-           $error['EmailAndPassword'] = "Wrong Email or Password"; 
-           return $error;
+          return $stmt;
+        } else {
+          $error['EmailAndPassword'] = "Wrong Email or Password";
+          return $error;
         }
-      }else{
-        $error['EmailAndPassword'] = "Wrong Email or Password"; 
-        return $error; 
+      } else {
+        $error['EmailAndPassword'] = "Wrong Email or Password";
+        return $error;
       }
-    }else{
+    } else {
       return $error;
     }
   }
 
   public function logout_company()
   {
-    if(isset($_SESSION['company_details']) && !empty($_SESSION['company_details'])){ 
+    if (isset($_SESSION['company_details']) && !empty($_SESSION['company_details'])) {
       session_destroy();
-      Redirect("home"); 
+      Redirect("home");
     }
   }
 
@@ -184,31 +184,25 @@ class Company extends Database
   {
     $database = new Database();
 
-    $data = []; 
+    $data = [];
     $data['id'] = $_SESSION['company_details'][0]->id;
     $query = "SELECT * FROM company WHERE id = :id LIMIT 1";
     $stmt = $database->read($query, $data);
 
-    return $stmt; 
-
+    return $stmt;
   }
 
   public function edit($POST, $FILEPIC)
   {
     $database = new Database();
-    //RETRIEVE DATA FROM company
-    // $dataSelect['id'] = $_SESSION['company_details'][0]->id;
-    // $querySelect = "SELECT * FROM company WHERE id = :id LIMIT 1";
-    // $stmtSelect = $database->read($querySelect, $dataSelect);
+
     //VALIDATION
     $companyName = htmlspecialchars(trim($POST['company_name']));
     $companyHQ = htmlspecialchars(trim($POST['company_HQ']));
-    // IMAGE DATA
     $logoName = htmlspecialchars(trim($FILEPIC['logo']['name']));
     $logoSize = htmlspecialchars(trim($FILEPIC['logo']['size']));
     $logoTMP = htmlspecialchars(trim($FILEPIC['logo']['tmp_name']));
-    $logoType = htmlspecialchars(trim($FILEPIC['logo']['type'])); 
-    // END IMAGE DATA
+    $logoType = htmlspecialchars(trim($FILEPIC['logo']['type']));
     $companyWebsiteUrl = htmlspecialchars(trim($POST['company_website_url']));
     $password = htmlspecialchars(trim($POST['password']));
     $password_confirm = htmlspecialchars(trim($POST['password_confirm']));
@@ -230,27 +224,22 @@ class Company extends Database
       $error['companyHQ'] = 'Your companyHQ must contains only letters';
     }
 
-    if (empty($logoName)) {
-      $error['logo'] = 'You must enter your logo';
-    } elseif ($logoSize > 2097152) {
-      $error['logo'] = 'File size must be excately 2 MB';
-    }
+
 
     if (empty($companyWebsiteUrl)) {
       $error['companyWebsiteUrl'] = 'You must enter your company Website Url';
     }
 
-    if (empty($password)) {
-      $error['password'] = 'You must enter your password';
-    } elseif (strlen($password) < 6) {
-      $error['password'] = 'Your password must be atleast 6 characters long';
-    }
+    // if (empty($password)) {
+    //   $error['password'] = 'You must enter your password';
+    // } elseif (strlen($password) < 6) {
+    //   $error['password'] = 'Your password must be atleast 6 characters long';
+    // }
 
-    if ($password !== $password_confirm) {
-      $error['passwordConfirm'] = 'Your passwords do not match';
-    }
+    // if ($password !== $password_confirm) {
+    //   $error['passwordConfirm'] = 'Your passwords do not match';
+    // }
 
-    //Check if email is already taken
 
     if (empty($companyEmail)) {
       $error['companyEmail'] = "You must enter your company Email";
@@ -263,24 +252,64 @@ class Company extends Database
     }
 
     if (empty($error)) {
-      $uploadFile = "assets/images/";
-      move_uploaded_file($logoTMP, $uploadFile . $logoName);
+      // first scnenario User Update without logo and password
+      if (isset($companyName) && isset($companyHQ) && isset($companyWebsiteUrl) && isset($companyEmail) && isset($companyDescription)) {
+        $data = [];
+        $data['id'] = $_SESSION['company_details'][0]->id;
+        $data['company_name'] = $companyName;
+        $data['company_HQ'] = $companyHQ;
+        $data['company_website_url'] = $companyWebsiteUrl;
+        $data['company_email'] = $companyEmail;
+        $data['company_description'] = $companyDescription;
 
-      $data = [];
-      $data['company_name'] = $companyName;
-      $data['company_HQ'] = $companyHQ;
-      $data['logo'] = $logoName;
-      $data['company_website_url'] = $companyWebsiteUrl;
-      $data['password'] = password_hash($password, PASSWORD_DEFAULT);
-      $data['company_email'] = $companyEmail;
-      $data['company_description'] = $companyDescription;
+        $query = "UPDATE company SET company_name = :company_name, company_HQ = :company_HQ, company_website_url = :company_website_url, company_email = :company_email, company_description = :company_description WHERE id = :id";
 
-      $query = "INSERT INTO company (company_name, company_HQ, logo, company_website_url, company_email, password, company_description) VALUES (:company_name, :company_HQ, :logo, :company_website_url, :company_email, :password, :company_description)";
+        $stmt = $database->write($query, $data);
 
-      $stmt = $database->write($query, $data);
+        if ($stmt) {
+          Redirect("company_account/company_edit");
+          return $stmt;
+        } else {
+          return $error;
+        }
+      }
 
-      if ($stmt) {
-        return $stmt;
+      // second scenario is : the user update the logo  and everything else except the password
+       //validation logo
+      if (empty($logoName)) {
+        $error['logo'] = 'You must enter your logo';
+      } elseif ($logoSize > 2097152) {
+        $error['logo'] = 'File size must be excately 2 MB';
+      }
+      if(empty($error['logo'])){
+
+        if (isset($logo)) {         
+          # code...
+          $uploadFile = "assets/images/";
+          move_uploaded_file($logoTMP, $uploadFile . $logoName);
+  
+          $data = [];
+          $data['id'] = $_SESSION['company_details'][0]->id;
+          $data['company_name'] = $companyName;
+          $data['company_HQ'] = $companyHQ;
+          $data['logo'] = $logoName;
+          $data['company_website_url'] = $companyWebsiteUrl;
+          $data['company_email'] = $companyEmail;
+          $data['company_description'] = $companyDescription;
+  
+          $query = "UPDATE company SET company_name = :company_name, company_HQ = :company_HQ, logo = :logo, company_website_url = :company_website_url, company_email = :company_email, company_description = :company_description WHERE id = :id";
+  
+          $stmt = $database->write($query, $data);
+  
+          if ($stmt) {
+            //  Redirect("company_account/company_edit");
+            return $stmt;
+          }
+        }else{
+          return $error; 
+        }
+      }else{
+        return $error; 
       }
     } else {
       return $error;
