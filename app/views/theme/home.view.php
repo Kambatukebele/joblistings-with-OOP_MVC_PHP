@@ -1,4 +1,4 @@
-<?php $this->view("theme", "header"); ?>
+<?php $this->view("theme", "header", $data); ?>
 <!-- start banner Area -->
 <section class="banner-area relative" id="home">
   <div class="overlay overlay-bg"></div>
@@ -769,4 +769,4 @@
   </div>
 </section>
 <!-- End download Area -->
-<?php $this->view("theme", "footer") ?>
+<?php $this->view("theme", "footer", $data);?>

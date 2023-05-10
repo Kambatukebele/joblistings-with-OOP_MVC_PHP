@@ -10,7 +10,7 @@
       if($_SERVER['REQUEST_METHOD'] === "POST")
       {
         $companyModel = $this->model('company');
-        $result = $companyModel->store($_POST, $_FILES); 
+        $result = $companyModel->register_company($_POST, $_FILES); 
 
         if(is_array($result) && count($result) > 0)
         {

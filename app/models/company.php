@@ -2,7 +2,7 @@
 
 class Company extends Database
 {
-  public function store($POST, $FILEPIC)
+  public function register_company($POST, $FILEPIC)
   {
     $database = new Database();
     //VALIDATION
@@ -123,7 +123,7 @@ class Company extends Database
   }
 
   //LOGGING A COMPANY
-  public function show($POST)
+  public function login_company($POST)
   {
      $database = new Database();
 
@@ -170,8 +170,121 @@ class Company extends Database
     }
   }
 
-  public function update()
+  public function logout_company()
   {
+    if(isset($_SESSION['company_details']) && !empty($_SESSION['company_details'])){ 
+      session_destroy();
+      Redirect("home"); 
+    }
+  }
+
+
+  //CRUD ON COMPANY details
+  public function show()
+  {
+    $database = new Database();
+
+    $data = []; 
+    $data['id'] = $_SESSION['company_details'][0]->id;
+    $query = "SELECT * FROM company WHERE id = :id LIMIT 1";
+    $stmt = $database->read($query, $data);
+
+    return $stmt; 
+
+  }
+
+  public function edit($POST, $FILEPIC)
+  {
+    $database = new Database();
+    //RETRIEVE DATA FROM company
+    // $dataSelect['id'] = $_SESSION['company_details'][0]->id;
+    // $querySelect = "SELECT * FROM company WHERE id = :id LIMIT 1";
+    // $stmtSelect = $database->read($querySelect, $dataSelect);
+    //VALIDATION
+    $companyName = htmlspecialchars(trim($POST['company_name']));
+    $companyHQ = htmlspecialchars(trim($POST['company_HQ']));
+    // IMAGE DATA
+    $logoName = htmlspecialchars(trim($FILEPIC['logo']['name']));
+    $logoSize = htmlspecialchars(trim($FILEPIC['logo']['size']));
+    $logoTMP = htmlspecialchars(trim($FILEPIC['logo']['tmp_name']));
+    $logoType = htmlspecialchars(trim($FILEPIC['logo']['type'])); 
+    // END IMAGE DATA
+    $companyWebsiteUrl = htmlspecialchars(trim($POST['company_website_url']));
+    $password = htmlspecialchars(trim($POST['password']));
+    $password_confirm = htmlspecialchars(trim($POST['password_confirm']));
+    $companyEmail = htmlspecialchars(trim($POST['company_email']));
+    $companyDescription = htmlspecialchars(trim($POST['company_description']));
+
+    $error = array();
+
+
+    if (empty($companyName)) {
+      $error['companyName'] = 'You must enter your company name';
+    } else if (!preg_match("/^([a-zA-Z' ]+)$/", $companyName)) {
+      $error['companyName'] = 'Your company name must contains only letters';
+    }
+    //Check if the Company HQ already exist
+    if (empty($companyHQ)) {
+      $error['companyHQ'] = 'You must enter your companyHQ';
+    } else if (!preg_match("/^([a-zA-Z' ]+)$/", $companyHQ)) {
+      $error['companyHQ'] = 'Your companyHQ must contains only letters';
+    }
+
+    if (empty($logoName)) {
+      $error['logo'] = 'You must enter your logo';
+    } elseif ($logoSize > 2097152) {
+      $error['logo'] = 'File size must be excately 2 MB';
+    }
+
+    if (empty($companyWebsiteUrl)) {
+      $error['companyWebsiteUrl'] = 'You must enter your company Website Url';
+    }
+
+    if (empty($password)) {
+      $error['password'] = 'You must enter your password';
+    } elseif (strlen($password) < 6) {
+      $error['password'] = 'Your password must be atleast 6 characters long';
+    }
+
+    if ($password !== $password_confirm) {
+      $error['passwordConfirm'] = 'Your passwords do not match';
+    }
+
+    //Check if email is already taken
+
+    if (empty($companyEmail)) {
+      $error['companyEmail'] = "You must enter your company Email";
+    } elseif (!filter_var($companyEmail, FILTER_VALIDATE_EMAIL)) {
+      $error['companyEmail'] = "Invalide email address";
+    }
+
+    if (empty($companyDescription)) {
+      $error['companyDescription'] = "You must enter your company description";
+    }
+
+    if (empty($error)) {
+      $uploadFile = "assets/images/";
+      move_uploaded_file($logoTMP, $uploadFile . $logoName);
+
+      $data = [];
+      $data['company_name'] = $companyName;
+      $data['company_HQ'] = $companyHQ;
+      $data['logo'] = $logoName;
+      $data['company_website_url'] = $companyWebsiteUrl;
+      $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+      $data['company_email'] = $companyEmail;
+      $data['company_description'] = $companyDescription;
+
+      $query = "INSERT INTO company (company_name, company_HQ, logo, company_website_url, company_email, password, company_description) VALUES (:company_name, :company_HQ, :logo, :company_website_url, :company_email, :password, :company_description)";
+
+      $stmt = $database->write($query, $data);
+
+      if ($stmt) {
+        return $stmt;
+      }
+    } else {
+      return $error;
+    }
   }
 
   public function delete()

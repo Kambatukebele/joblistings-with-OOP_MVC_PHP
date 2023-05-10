@@ -54,9 +54,15 @@
 	                  <li><a href="single.html">single</a></li>
 	                </ul>
 	              </li> -->
+	              <?php if(isset($_SESSION['company_details'])): ?>
+	              <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>logout_company">Logout</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>company_account">Account</a></li>
+	              <?php else: ?>
 	              <li><a class="ticker-btn" href="<?=ROOT?>register_company">Register your company</a></li>
 	              <li><a class="ticker-btn" href="<?=ROOT?>login_company">Login</a></li>
-	              <!-- <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li> -->
+	              <?php endif; ?>
+
 	            </ul>
 	          </nav><!-- #nav-menu-container -->
 	        </div>

@@ -10,7 +10,7 @@
       if($_SERVER['REQUEST_METHOD'] === "POST")
       {
         $companyModel = $this->model('company');
-        $result = $companyModel->show($_POST); 
+        $result = $companyModel->login_company($_POST); 
         if(isset($result['password']) || isset($result['company_email']) || isset($result['EmailAndPassword']))
         {
           $data['error'] = $result;         
