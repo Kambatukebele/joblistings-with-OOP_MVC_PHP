@@ -125,7 +125,7 @@
           </div>
           <br><br>
           <div>
-            <button type="submit" class="btn btn-success">Register Your Company</button>
+            <button class="btn btn-success">Register Your Company</button>
           </div>
           <div class="mt-3">
             Already Registered? Log in <a class="text-danger" href="<?=ROOT?>login_company">here</a>

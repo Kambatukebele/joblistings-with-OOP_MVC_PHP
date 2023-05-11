@@ -114,6 +114,7 @@ class Company extends Database
     }
 
     if (empty($error)) {
+     
       $uploadFile = "assets/images/";
       move_uploaded_file($this->logoTMP, $uploadFile . $this->logoName);
 
@@ -129,9 +130,9 @@ class Company extends Database
       $query = "INSERT INTO company (company_name, company_HQ, logo, company_website_url, company_email, password, company_description) VALUES (:company_name, :company_HQ, :logo, :company_website_url, :company_email, :password, :company_description)";
 
       $stmt = $database->write($query, $data);
-
-      if ($stmt) {
-        return $stmt;
+     
+      if ($stmt) { 
+        return $stmt; 
       }
     } else {
       return $error;
@@ -208,43 +209,25 @@ class Company extends Database
     return $stmt;
   }
 
-  public function edit($POST, $FILEPIC)
+  public function edit($POST)
   {
 
-   if (isset($POST['company_name']) && isset($POST['company_HQ']) && isset($POST['company_website_url']) && isset($POST['company_email']) && isset($POST['company_description'])) 
-    {
-      $this->AllInputsExceptLogoAndPassword(
-        $this->companyName = $this->secureInputs($POST['company_name']), 
+    if (isset($POST['company_name']) && isset($POST['company_HQ']) && isset($POST['company_website_url']) && isset($POST['company_email']) && isset($POST['company_description'])) {
+      $this->edit_validation(
+        $this->companyName = $this->secureInputs($POST['company_name']),
         $this->companyHQ = $this->secureInputs($POST['company_HQ']),
-        $this->companyWebsiteUrl = $this->secureInputs($POST['company_website_url']),
-        $this->companyEmail = $this->secureInputs($POST['company_email']),
-        $this->companyDescription = $this->secureInputs($POST['company_description'])
-      ); 
-
-    }elseif(isset($POST['company_name']) && isset($POST['company_HQ']) && isset($_FILES['logo']) && isset($POST['company_website_url']) && isset($POST['company_email']) && isset($POST['company_description']))
-    {
-      $this->AllInputsExceptPassword(
-        $this->companyName = $this->secureInputs($POST['company_name']), 
-        $this->companyHQ = $this->secureInputs($POST['company_HQ']),
-        $this->logoName = $this->secureInputs($FILEPIC['logo']),
         $this->companyWebsiteUrl = $this->secureInputs($POST['company_website_url']),
         $this->companyEmail = $this->secureInputs($POST['company_email']),
         $this->companyDescription = $this->secureInputs($POST['company_description'])
       );
-
     }
-
-
-
-
-    
   }
 
 
   /*****************************************************************
-   * we will create function scenario cases for editing our user profile company
+   * 
    ********************************************************************/
-  public function AllInputsExceptLogoAndPassword($companyName, $companyHQ, $companyWebsiteUrl, $companyEmail, $companyDescription)
+  public function edit_validation($companyName, $companyHQ, $companyWebsiteUrl, $companyEmail, $companyDescription)
   {
     $database = new Database();
 
@@ -278,7 +261,7 @@ class Company extends Database
 
     if (empty($error)) {
       // first scnenario User Update without logo and password
-      
+
       $data = [];
       $data['id'] = $_SESSION['company_details'][0]->id;
       $data['company_name'] = $this->companyName;
@@ -292,6 +275,7 @@ class Company extends Database
       $stmt = $database->write($query, $data);
 
       if ($stmt) {
+        Redirect("company_account");
         return $stmt;
       } else {
         return $error;
@@ -301,78 +285,26 @@ class Company extends Database
     }
   }
 
-  public function AllInputsExceptPassword($companyName, $companyHQ, $logoName, $companyWebsiteUrl, $companyEmail, $companyDescription)
-  {
-     $database = new Database();
 
-    $error = array();
-
-    if (empty($this->companyName)) {
-      $error['companyName'] = 'You must enter your company name';
-    } else if (!preg_match("/^([a-zA-Z' ]+)$/", $this->companyName)) {
-      $error['companyName'] = 'Your company name must contains only letters';
-    }
-    //Check if the Company HQ already exist
-    if (empty($this->companyHQ)) {
-      $error['companyHQ'] = 'You must enter your companyHQ';
-    } else if (!preg_match("/^([a-zA-Z' ]+)$/", $this->companyHQ)) {
-      $error['companyHQ'] = 'Your companyHQ must contains only letters';
-    }
-
-    if (empty($this->logoName)) {
-      $error['logo'] = 'You must enter your logo';
-    } elseif ($this->logoSize > 2097152) {
-      $error['logo'] = 'File size must be excately 2 MB';
-    }
-
-    if (empty($this->companyWebsiteUrl)) {
-      $error['companyWebsiteUrl'] = 'You must enter your company Website Url';
-    }
-
-    if (empty($this->companyEmail)) {
-      $error['companyEmail'] = "You must enter your company Email";
-    } elseif (!filter_var($this->companyEmail, FILTER_VALIDATE_EMAIL)) {
-      $error['companyEmail'] = "Invalide email address";
-    }
-
-    if (empty($this->companyDescription)) {
-      $error['companyDescription'] = "You must enter your company description";
-    }
-
-    if (empty($error)) {
-     
-       $uploadFile = "assets/images/";
-      move_uploaded_file($this->logoTMP, $uploadFile . $this->logoName);
-      
-      $data = [];
-      $data['id'] = $_SESSION['company_details'][0]->id;
-      $data['company_name'] = $this->companyName;
-      $data['company_HQ'] = $this->companyHQ;
-      $data['logo'] = $this->logoName;
-      $data['company_website_url'] = $this->companyWebsiteUrl;
-      $data['company_email'] = $this->companyEmail;
-      $data['company_description'] = $this->companyDescription;
-
-
-      $query = "UPDATE company SET company_name = :company_name, company_HQ = :company_HQ, logo = :logo company_website_url = :company_website_url, company_email = :company_email, company_description = :company_description WHERE id = :id";
-
-      $stmt = $database->write($query, $data);
-
-      if ($stmt) {
-        return $stmt;
-      } else {
-        return $error;
-      }
-    } else {
-      return $error;
-    }
-
-  }
   /*****************************************************************
    * we will function scenario cases for editing our user profile company
    ********************************************************************/
 
-  public function delete()
+  public function destroy()
   {
+    $database = new Database;
+
+  
+    $destroyFile = "assets/images/" .$_SESSION['company_details'][0]->logo;
+    
+    $data['id'] = $_SESSION['company_details'][0]->id;
+    $query = "DELETE FROM company WHERE id = :id";
+    $stmt = $database->write($query, $data);
+
+    if($stmt){
+      unlink($destroyFile); 
+      session_destroy(); 
+      return $stmt; 
+    }
   }
 }

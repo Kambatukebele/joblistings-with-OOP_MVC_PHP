@@ -16,7 +16,7 @@
           $data['error'] = $result;         
         }else{
           $_SESSION['company_details'] = $result;
-          Redirect("company_dashbord");
+          Redirect("company_account");
         }
       }
 

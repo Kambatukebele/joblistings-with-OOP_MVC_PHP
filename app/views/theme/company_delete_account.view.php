@@ -6,7 +6,7 @@
     <div class="row d-flex align-items-center justify-content-center">
       <div class="about-content col-lg-12">
         <h1 class="text-white">
-          Account
+          Delete your Account
         </h1>
         <p class="text-white"><a href="<?= ROOT ?>">Go back </a> <span class="lnr lnr-arrow-right"></span> <a
             href="<?= ROOT ?>">Here</a></p>
@@ -66,10 +66,11 @@
           </div>
         </div>
         <br><br>
+        Are you sure you want to delete your account?
+        <br><br>
         <div class="mb-5">
-          <a href="<?=ROOT?>company_account/company_edit"><button class="btn btn-primary">Edit Your
-              details</button></a>
-          <a href="<?=ROOT?>company_account/company_delete_account"><button class="btn btn-danger">Delete your
+          <a href="<?=ROOT?>company_account"><button class="btn btn-primary">No, Cancel Action</button></a>
+          <a href="<?=ROOT?>company_account/company_delete_account_destroy"><button class="btn btn-danger">Yes Delete my
               Account</button></a>
         </div>
       </div>

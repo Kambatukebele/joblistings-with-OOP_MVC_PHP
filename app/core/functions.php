@@ -27,7 +27,7 @@
   function Redirect($url)
   {
     header("Location: " . ROOT . $url);
-    return $url; 
+    die();
   }
 
     
