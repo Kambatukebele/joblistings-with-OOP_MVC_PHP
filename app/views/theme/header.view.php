@@ -44,20 +44,12 @@
 	              <li class="menu-active"><a href="<?=ROOT?>">Home</a></li>
 	              <li><a href="<?=ROOT?>about">About Us</a></li>
 	              <li><a href="<?=ROOT?>category">Category</a></li>
-	              <li><a href="<?=ROOT?>price">Price</a></li>
-	              <li><a href="<?=ROOT?>blog">Blog</a></li>
 	              <li><a href="<?=ROOT?>contact">Contact</a></li>
-	              <!-- <li class="menu-has-children"><a href="">Pages</a>
-	                <ul>
-	                  <li><a href="elements.html">elements</a></li>
-	                  <li><a href="search.html">search</a></li>
-	                  <li><a href="single.html">single</a></li>
-	                </ul>
-	              </li> -->
 	              <?php if(isset($_SESSION['company_details'])): ?>
 	              <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li>
-	              <li><a class="ticker-btn" href="<?=ROOT?>logout_company">Logout</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>manager_posts">Manage Posts</a></li>
 	              <li><a class="ticker-btn" href="<?=ROOT?>company_account">Account</a></li>
+	              <li><a class="ticker-btn" href="<?=ROOT?>logout_company">Logout</a></li>
 	              <?php else: ?>
 	              <li><a class="ticker-btn" href="<?=ROOT?>register_company">Register your company</a></li>
 	              <li><a class="ticker-btn" href="<?=ROOT?>login_company">Login</a></li>

@@ -9,7 +9,7 @@
       try {
         $conn = new PDO($query, DB_USER, DB_PASS); 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        echo "connected to successfully";
+        // echo "connected to successfully";
       }catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
       }

@@ -7,6 +7,7 @@
       <div class="banner-content col-lg-12">
         <h1 class="text-white">
           <span>1500+</span> Jobs posted last week
+
         </h1>
         <form action="search.html" class="serach-form-area">
           <div class="row justify-content-center form-wrap">

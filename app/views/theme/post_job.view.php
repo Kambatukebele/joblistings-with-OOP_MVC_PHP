@@ -1,4 +1,4 @@
-<?php $this->view("theme", "header");?>
+<?php $this->view("theme", "header", $data);?>
 <!-- start banner Area -->
 <section class="banner-area relative" id="home">
   <div class="overlay overlay-bg"></div>
@@ -22,18 +22,28 @@
     <div class="row d-flex align-items-center justify-content-center">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h3 class="py-3">Tell us about the position</h3>
-        <form method="post" action="<?=ROOT?>">
+        <?php if (isset($data['error'])) : ?>
+        <div class="alert alert-danger">
+          Please fix the following errors!
+        </div>
+        <?php endif ?>
+        <form method="post">
           <div class="form-group">
             <label for="formGroupExampleInput">Job Title <br> <small>Example: “Senior Designer”. Titles must describe
                 one position</small></label>
             <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter your job title here"
-              name="job_title" require>
+              name="job_title" require value="<?= old('job_title'); ?>">
+            <?php if (isset($data['error']['jobTitle'])) : ?>
+            <div class="alert alert-danger mt-2">
+              <?= $data['error']['jobTitle']; ?>
+            </div>
+            <?php endif; ?>
           </div>
           <div class="row">
             <div class="col">
               <label for="formGroupExampleInput">Category<br> <small>Choose a category</small></label>
               <select name="category" class="form-control" require>
-                <option value="Choose" selected id="">Choose</option>
+                <option value="Choose" disabled id="">Choose</option>
                 <option value="Design" id="">Design</option>
                 <option value="Full-stack Programming" id="">Full-stack Programming</option>
                 <option value="Front end Programming" id="">Front end Programming</option>
@@ -47,7 +57,13 @@
             </div>
             <div class="col">
               <label for="formGroupExampleInput">Tags <br> <small>Separate you tags with comma</small></label>
-              <input type="text" class="form-control" placeholder="Enter your tags here">
+              <input type="text" class="form-control" name="tags" placeholder="Enter your tags here"
+                value="<?= old('tags'); ?>">
+              <?php if (isset($data['error']['tags'])) : ?>
+              <div class="alert alert-danger mt-2">
+                <?= $data['error']['tags']; ?>
+              </div>
+              <?php endif; ?>
             </div>
 
           </div>
@@ -57,8 +73,7 @@
               <label for="formGroupExampleInput">Region<br> <small>Where you want to hire your ideal
                   candidate.</small></label>
               <select name="region" class="form-control" require>
-                <option value="Choose" selected id="">Region</option>
-                <option value="Design" id="">Design</option>
+                <option value="Choose" disabled id="">Choose</option>
                 <option value="USA - Only" id="">USA - Only</option>
                 <option value="North America Only" id="">North America Only</option>
                 <option value="Latin America Only" id="">Latin America Only</option>
@@ -74,7 +89,7 @@
               <label for="formGroupExampleInput">Salary Range <br><small>Just an idea for your futur
                   employee</small></label>
               <select name="salary_range" class="form-control" require>
-                <option value="Choose" selected id="">Choose</option>
+                <option value="Choose" disabled id="">Choose</option>
                 <option value="Prefer not to say" id="">Prefer not to say</option>
                 <option value="$25,000-$48,999 USD" id="">$25,000-$48,999 USD</option>
                 <option value="$50,000-$74,999 USD" id="">$50,000-$74,999 USD</option>
@@ -90,7 +105,7 @@
               <label for="formGroupExampleInput">Job Type<br> <small>What type of job are you offering to your ideal
                   candidate.</small></label>
               <select name="job_type" class="form-control" require>
-                <option value="Choose" selected id="">Choose</option>
+                <option value="Choose" disabled id="">Choose</option>
                 <option value="Contract" id="">Contract</option>
                 <option value="Full-time" id="">Full-time</option>
                 <option value="Part-time" id="">Part-time</option>
@@ -100,14 +115,29 @@
               <label for="formGroupExampleInput">Application Link or Email<br><small>Link to Application page or Email
                   address.</small></label>
               <input name="application_link_email" class="form-control"
-                placeholder="Enter your email or the application job here" require>
+                placeholder="Enter your email or the application job here" require
+                value="<?= old('application_link_email'); ?>">
+              <?php if (isset($data['error']['applicationLinkEmail'])) : ?>
+              <div class="alert alert-danger mt-2">
+                <?= $data['error']['applicationLinkEmail']; ?>
+              </div>
+              <?php endif; ?>
             </div>
 
           </div>
           <br>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Job Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+            <textarea class="form-control" name="job_description" id="exampleFormControlTextarea1"
+              rows="10"><?= old('job_description'); ?></textarea>
+            <?php if (isset($data['error']['jobDescription'])) : ?>
+            <div class="alert alert-danger mt-2">
+              <?= $data['error']['jobDescription']; ?>
+            </div>
+            <?php endif; ?>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success">Post Now</button>
           </div>
         </form>
       </div>
@@ -115,4 +145,4 @@
   </div>
 </section>
 <!-- END POST FORM -->
-<?php $this->view("theme", "footer");?>
+<?php $this->view("theme", "footer", $data);?>
