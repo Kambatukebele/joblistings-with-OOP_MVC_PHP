@@ -98,7 +98,6 @@
               </div>
               <?php endif; ?>
             </div>
-            <?php showPrint($data);?>
           </div>
           <br><br>
           <div class="my-2">

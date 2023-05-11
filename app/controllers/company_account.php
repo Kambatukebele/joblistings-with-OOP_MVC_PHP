@@ -25,6 +25,7 @@
 
       $companyModel = $this->model('company');
       $result = $companyModel->show();
+       
       if(!$result){
         Redirect("company_account");
       }else{
@@ -32,15 +33,17 @@
         if($_SERVER['REQUEST_METHOD'] == "POST"){
           
           $edit = $companyModel->edit($_POST, $_FILES);
-
-          if(!$edit){
-            $data['update_Error'] = $edit; 
-          }
-          
-        }
-       
-      }    
+           
+          if($edit != 1){
+            $data['error'] = $edit; 
+          }          
+        }       
+      }
+      
+      showPrint($_POST);
+      showPrint($_FILES); 
       //You need to specify the folder of the view you want to load
       return $this->view("theme","company_edit", $data); 
     }
+
   }

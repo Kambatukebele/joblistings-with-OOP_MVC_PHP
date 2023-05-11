@@ -17,7 +17,8 @@ let hidePasswordConfirm = document.getElementById("input_password_confirm");
  * we will do the same for the password inputs, so that the client chooses if he want to change the logo or password
  */
 function showAndHideBlock(paramYes, paramNo, ParamBlock) {
-  paramYes.addEventListener("click", () => {
+  paramYes.addEventListener("click", (e) => {
+    e.preventDefault();
     ParamBlock.classList.remove("d-none");
     paramNo.classList.remove("d-none");
 
@@ -28,6 +29,7 @@ function showAndHideBlock(paramYes, paramNo, ParamBlock) {
       inputLogo.setAttribute("name", "logo");
       inputLogo.setAttribute("class", "custom-file-input");
       inputLogo.setAttribute("id", "logo_id");
+      // inputLogo.setAttribute("required", "");
       hideDisplay.appendChild(inputLogo);
     } else if (paramYes.classList.contains("edit-password")) {
       //Creating  the password input field
@@ -46,7 +48,8 @@ function showAndHideBlock(paramYes, paramNo, ParamBlock) {
       hidePasswordConfirm.appendChild(inputPasswordConfirm);
     }
   });
-  paramNo.addEventListener("click", () => {
+  paramNo.addEventListener("click", (e) => {
+    e.preventDefault();
     ParamBlock.classList.add("d-none");
     paramNo.classList.add("d-none");
 
