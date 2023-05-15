@@ -41,7 +41,8 @@
               <td>
                 <a href="<?=ROOT?>manager_posts/listing_edit/<?=$key->id?>"><button
                     class="btn btn-primary">Edit</button></a>
-                <a href="<?=ROOT?>manager_posts/delete/<?=$key->id?>"><button class="btn btn-danger">Delete</button></a>
+                <a href="<?=ROOT?>manager_posts/listing_delete/<?=$key->id?>"><button
+                    class="btn btn-danger">Delete</button></a>
               </td>
             </tr>
             <?php endforeach; ?>

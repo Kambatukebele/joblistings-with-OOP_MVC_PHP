@@ -4,7 +4,7 @@
   {
     public function index(){
       $listingModel = $this->model('Listings');
-      $result = $listingModel->show(); 
+      $result = $listingModel->showSix(); 
 
       if(is_array($result) && count($result) > 0){
         $data['success'] = $result; 
