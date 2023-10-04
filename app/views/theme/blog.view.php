@@ -1,4 +1,4 @@
-<?php $this->view("theme", "header");  ?>
+<?php $this->view("theme", "header", $data);  ?>
 
 <!-- start banner Area -->
 <section class="banner-area relative" id="home">
@@ -350,4 +350,4 @@
 </section>
 <!-- End blog-posts Area -->
 
-<?php $this->view("theme", "footer");?>
+<?php $this->view("theme", "footer", $data);?>

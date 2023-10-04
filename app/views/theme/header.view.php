@@ -43,7 +43,6 @@
 	            <ul class="nav-menu">
 	              <li class="menu-active"><a href="<?=ROOT?>">Home</a></li>
 	              <li><a href="<?=ROOT?>about">About Us</a></li>
-	              <li><a href="<?=ROOT?>category">Category</a></li>
 	              <li><a href="<?=ROOT?>contact">Contact</a></li>
 	              <?php if(isset($_SESSION['company_details'])): ?>
 	              <li><a class="ticker-btn" href="<?=ROOT?>post_job">Post a Job</a></li>

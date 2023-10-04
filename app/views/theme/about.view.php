@@ -1,4 +1,4 @@
-<?php $this->view("theme", "header");  ?>
+<?php $this->view("theme", "header", $data);  ?>
 
 
 <!-- start banner Area -->
@@ -295,4 +295,4 @@
 <!-- End testimonial Area -->
 
 
-<?php $this->view("theme", "footer");  ?>
+<?php $this->view("theme", "footer", $data);  ?>

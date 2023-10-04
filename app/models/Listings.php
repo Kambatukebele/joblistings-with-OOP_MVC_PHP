@@ -135,6 +135,20 @@ class Listings extends Database
     }
   }
 
+  public function SinglePost($id)
+  {
+    $database = new Database();
+    $data = [];
+    $data['id'] =  $id;
+    //$query = "SELECT * FROM listings WHERE id = :id ORDER BY id "; 
+    $query= "SELECT * FROM company, listings WHERE company.id = listings.company_id && listings.id = :id";
+    $stmt = $database->read($query, $data);
+
+    if ($stmt) {
+      return $stmt;
+    }
+  }
+
   public function edit($id)
   {
     $database = new Database();
@@ -228,6 +242,8 @@ class Listings extends Database
       return $error;
     }
   }
+
+  
 
   
 }

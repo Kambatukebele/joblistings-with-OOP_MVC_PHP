@@ -34,7 +34,7 @@ class Company extends Database
     $this->password = $this->secureInputs($POST['password']);
     $this->password_confirm = $this->secureInputs($POST['password_confirm']);
     $this->companyEmail = $this->secureInputs($POST['company_email']);
-    $this->companyDescription = $this->secureInputs($POST['company_description']);
+    $this->companyDescription = $this->secureInputs(nl2br($POST['company_description']));
 
     $error = array();
 
@@ -218,7 +218,7 @@ class Company extends Database
         $this->companyHQ = $this->secureInputs($POST['company_HQ']),
         $this->companyWebsiteUrl = $this->secureInputs($POST['company_website_url']),
         $this->companyEmail = $this->secureInputs($POST['company_email']),
-        $this->companyDescription = $this->secureInputs($POST['company_description'])
+        $this->companyDescription = $this->secureInputs(nl2br($POST['company_description']))
       );
     }
   }

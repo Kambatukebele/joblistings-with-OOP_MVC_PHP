@@ -96,6 +96,7 @@
 <script src="<?=ROOT_ASSETS?>theme/js/mail-script.js"></script>
 <script src="<?=ROOT_ASSETS?>theme/js/main.js"></script>
 <script src="<?=ROOT_ASSETS?>theme/js/extrajs.js"></script>
+<script src="<?=ROOT_ASSETS?>theme/js/loadmore.js"></script>
 </body>
 
 </html>

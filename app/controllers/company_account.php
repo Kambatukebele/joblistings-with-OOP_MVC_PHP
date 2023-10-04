@@ -3,7 +3,7 @@
   class Company_account extends Controller
   {
     public function index(){
-
+      middleware($_SESSION['company_details']); 
       $data = []; 
       $data['page_title'] = "Company Account | Job Listings"; 
 
@@ -20,6 +20,7 @@
     }
 
     public function company_edit (){
+      middleware($_SESSION['company_details']); 
       $data = []; 
       $data['page_title'] = "Edit Account | Job Listings"; 
 
@@ -46,7 +47,7 @@
 
     public function company_delete_account ()
     {
-      
+      middleware($_SESSION['company_details']); 
       $companyModel = $this->model('company');
       $result = $companyModel->show();      
 
@@ -61,6 +62,7 @@
 
     public function company_delete_account_destroy()
     {
+      middleware($_SESSION['company_details']); 
       $companyModel = $this->model('company');
       $result = $companyModel->destroy();   
       

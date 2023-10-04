@@ -15,11 +15,11 @@
        if(is_array($result))
         {
           $data['error'] = $result;         
-        }
+        }else{
+          Redirect("login_company"); 
+        }       
         
-        
-      }
-      
+      }      
       //You need to specify the folder of the view you want to load
       return $this->view("theme","register_company", $data);  
     }
